@@ -5,12 +5,14 @@ div
   comp-a
   comp-b
   counter
+  search-bar
 </template>
 
 <script>
 import CompA from './components/a.vue'
 import CompB from './components/b.vue'
 import Counter from './components/counter.vue'
+import SearchBar from './components/search-bar.vue'
 
 export default {
   data () {
@@ -21,7 +23,8 @@ export default {
   components: {
     CompA,
     CompB,
-    Counter
+    Counter,
+    SearchBar,
   }
 }
 </script>
