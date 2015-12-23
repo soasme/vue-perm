@@ -1,7 +1,11 @@
 <template>
-  <add-permission @permission-created="appendNewPermission"></add-permission>
+  <add-permission 
+    @permission-created="appendNewPermission"
+    ></add-permission>
   <div v-for="permission in permissions">
-    <permission :permission="permission" ></permission>
+    <permission :permission="permission"
+      @permission-deleted="removePermission"
+    ></permission>
   </div>
 </template>
 
@@ -33,8 +37,11 @@ export default {
   },
 
   methods: {
-    appendNewPermission: function (permission) {
+    appendNewPermission (permission) {
       this.permissions.splice(0, 0, permission)
+    },
+    removePermission (permission) {
+      this.permissions.$remove(permission)
     }
   }
 
