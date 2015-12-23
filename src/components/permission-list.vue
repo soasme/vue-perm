@@ -14,6 +14,10 @@
           :user-groups="userGroups"
           :permission="permission"
         ></authorize-permission-to-user-group>
+        <authorize-permission-to-user
+          :permission="permission"
+          :users="users"
+        ></authorize-permission-to-user>
       </div>
     </permission>
   </div>
@@ -27,6 +31,7 @@ import AddPermission from './add-permission.vue'
 import User from './user.vue'
 import AddUserGroup from './add-user-group.vue'
 import AuthorizePermissionToUserGroup from './authorize-permission-to-user-group.vue'
+import AuthorizePermissionToUser from './authorize-permission-to-user.vue'
 
 Vue.use(VueResource)
 
@@ -35,6 +40,7 @@ export default {
     return {
       permissions: [],
       userGroups: [],
+      users: [],
     }
   },
 
@@ -43,6 +49,7 @@ export default {
     AddPermission,
     AddUserGroup,
     AuthorizePermissionToUserGroup,
+    AuthorizePermissionToUser,
   },
 
   ready () {
@@ -57,6 +64,12 @@ export default {
     }, (resp) => {
       alert('Load userGroups failed')
     })
+
+    this.$http.get('/perm/users').then((resp) => {
+      this.$set('users', resp.data.data.users)
+    }, (resp) => {
+      alert('Load users failed')
+    })
   },
 
   methods: {
@@ -68,7 +81,7 @@ export default {
     },
     appendNewUserGroup (userGroup) {
       this.userGroups.splice(0, 0, userGroup)
-    }
+    },
   }
 
 
