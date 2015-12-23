@@ -3,16 +3,14 @@
     <h3>{{ permission.title }}</h3>
     <h4>{{ permission.code }}</h4>
     <button @click="deletePermission">Delete Permission</button>
-    <button @click="authorizePermissionToUser">Authorize Permission to User</button>
-    <button @click="showAuthroizedUsers">Show Authorized Users</button>
     <div v-for="user in users">
-      <user :avatar="user.avatar" :nickname="user.nickname">
+      <user :user=user>
         <button @click="unauthroizeUserPermission(user)">
           Unauthorize User Permission
         </button>
       </user>
     </div>
-    <div v-for="user_group in user_groups">
+    <div v-for="user_group in userGroups">
       <h5>{{ user_group.title }}</h5>
       <button @click="unauthroizeUserGroupPermission(user)">
         Unauthorize UserGroup Permission
@@ -38,7 +36,7 @@ export default {
       title: "",
       code: "",
       users: [],
-      user_groups: [],
+      userGroups: [],
     }
   },
 
@@ -50,7 +48,7 @@ export default {
 
     showAuthroizedUsers (e) {
       this.$http.get(`/perm/permissions/${ this.permission.id}/users`).then((resp) => {
-        this.$set('users', resp.data.users)
+        this.$set('users', resp.data.data.users)
       })
     },
 
