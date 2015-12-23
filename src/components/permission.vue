@@ -4,9 +4,7 @@
     <h4>{{ permission.code }}</h4>
     <button @click="deletePermission">Delete Permission</button>
     <button @click="authorizePermissionToUser">Authorize Permission to User</button>
-    <button @click="authorizePermissionToUserGroup">Authorize Permission to UserGroup</button>
     <button @click="showAuthroizedUsers">Show Authorized Users</button>
-    <button @click="showAuthroizedUserGroups">Show Authorized UserGroups</button>
     <div v-for="user in users">
       <user :avatar="user.avatar" :nickname="user.nickname">
         <button @click="unauthroizeUserPermission(user)">
@@ -20,6 +18,7 @@
         Unauthorize UserGroup Permission
       </button>
     </div>
+    <slot name="action"></slot>
   </div>
 </template>
 
@@ -69,8 +68,6 @@ export default {
     authorizePermissionToUser (e) {
     },
 
-    authorizePermissionToUserGroup (e) {
-    },
 
   }
 }

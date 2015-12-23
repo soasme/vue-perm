@@ -8,7 +8,14 @@
   <div v-for="permission in permissions">
     <permission :permission="permission"
       @permission-deleted="removePermission"
-    ></permission>
+    >
+      <div slot="action">
+        <authorize-permission-to-user-group
+          :user-groups="userGroups"
+          :permission="permission"
+        ></authorize-permission-to-user-group>
+      </div>
+    </permission>
   </div>
 </template>
 
@@ -19,6 +26,7 @@ import Permission from './permission.vue'
 import AddPermission from './add-permission.vue'
 import User from './user.vue'
 import AddUserGroup from './add-user-group.vue'
+import AuthorizePermissionToUserGroup from './authorize-permission-to-user-group.vue'
 
 Vue.use(VueResource)
 
@@ -34,6 +42,7 @@ export default {
     Permission,
     AddPermission,
     AddUserGroup,
+    AuthorizePermissionToUserGroup,
   },
 
   ready () {
