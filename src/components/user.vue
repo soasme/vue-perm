@@ -40,6 +40,8 @@ export default {
       avatar: "http://img6.douban.com/icon/u3770153-22.jpg",
       nickname: "soasme"
     }
-  }
+  },
+
+  props: ['avatar', 'nickname']
 }
 </script>
