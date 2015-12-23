@@ -25,6 +25,8 @@ export default {
 
   data () {
     return {
+      title: "",
+      code: "",
       users: []
     }
   },
@@ -34,20 +36,21 @@ export default {
   },
 
   methods: {
+
     showAuthroizedUsers (e) {
       this.$http.get(`/perm/permissions/${ this.permission.id}/users`).then((resp) => {
         this.$set('users', resp.data.users)
       })
     },
+
     deletePermission (e) {
       if (confirm('Do you really want to delete this permission?')) {
         this.$http.delete(`/perm/permissions/${ this.permission.id }`).then((resp) => {
           this.$dispatch('permission-deleted', this.permission)
         })
       }
-    }
+    },
+
   }
 }
 </script>
-
-

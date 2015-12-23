@@ -19,11 +19,20 @@ Vue.use(VueResource)
 
 export default {
 
+  data () {
+    return {
+      code: "",
+      title: "",
+    }
+  },
+
   methods: {
     addPermission (event) {
       this.$http.post('/perm/permissions', {
+
         title: this.title,
         code: this.code
+
       }).then((resp) => {
 
         this.title = ''
