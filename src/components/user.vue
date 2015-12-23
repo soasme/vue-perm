@@ -1,10 +1,10 @@
 <template>
   <div class="user">
     <div class="avatar">
-      <img src="{{ avatar }}" v-if="avatar">
+      <img src="{{ user.avatar }}">
     </div>
     <p class="nickname">
-      {{ nickname }}
+      {{ user.nickname }}
     </p>
     <slot name="action"></slot>
   </div>
@@ -37,11 +37,13 @@
 export default {
   data () {
     return {
-      avatar: "http://img6.douban.com/icon/u3770153-22.jpg",
-      nickname: "soasme"
+      user: {
+        avatar: "http://img6.douban.com/icon/u3770153-22.jpg",
+        nickname: "soasme"
+      }
     }
   },
 
-  props: ['avatar', 'nickname']
+  props: ['user'],
 }
 </script>
