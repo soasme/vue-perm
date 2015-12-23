@@ -1,5 +1,9 @@
 <template>
-  <ul>
+  <button @click="toggleManageUserGroupPermissions">Manage User Group Permissions</button>
+  <div v-if="isLoading()">
+    Loading
+  </div>
+  <ul v-if="isLoaded()">
     <li v-for="userGroup in userGroups">
       <label>
         <input type="checkbox"
@@ -24,23 +28,43 @@ export default {
 
   data () {
     return {
-      authorizedUserGroupIDs: []
+      authorizedUserGroupIDs: [],
+      manageUserPermissions: 'unloaded',
     }
   },
 
   ready () {
-    this.$http.get(
-      `/perm/permissions/${ this.permission.id }/user_groups`
-    ).then((resp) => {
-      this.$set('authorizedUserGroupIDs', resp.data.data.user_groups.map((group) => {
-        return group.id
-      }))
-    }, (resp) => {
-      console.error('load user group data failed', this.permission, this.userGroups)
-    })
   },
 
   methods: {
+    isUnloaded() {
+      return this.manageUserPermissions === 'unloaded'
+    },
+
+    isLoading() {
+      return this.manageUserPermissions === 'loading'
+    },
+
+    isLoaded() {
+      return this.manageUserPermissions === 'loaded'
+    },
+    toggleManageUserGroupPermissions () {
+      if (this.isLoaded()) {
+        this.manageUserPermissions = 'unloaded'
+      } else {
+        this.manageUserPermissions = 'loading'
+        this.$http.get(
+          `/perm/permissions/${ this.permission.id }/user_groups`
+        ).then((resp) => {
+          this.$set('authorizedUserGroupIDs', resp.data.data.user_groups.map((group) => {
+            return group.id
+          }))
+          this.manageUserPermissions = 'loaded'
+        }, (resp) => {
+          console.error('load user group data failed', this.permission, this.userGroups)
+        })
+      }
+    },
     togglePermissionToUserGroup (permission, userGroup) {
       if (this.authorizedUserGroupIDs.indexOf(userGroup.id) !== -1) {
         this.$http.delete(
