@@ -3,11 +3,22 @@
     <h3>{{ permission.title }}</h3>
     <h4>{{ permission.code }}</h4>
     <button @click="deletePermission">Delete Permission</button>
+    <button @click="authorizePermissionToUser">Authorize Permission to User</button>
+    <button @click="authorizePermissionToUserGroup">Authorize Permission to UserGroup</button>
     <button @click="showAuthroizedUsers">Show Authorized Users</button>
+    <button @click="showAuthroizedUserGroups">Show Authorized UserGroups</button>
     <div v-for="user in users">
       <user :avatar="user.avatar" :nickname="user.nickname">
-        <button @click="removeUser(user)">Remove user</button>
+        <button @click="unauthroizeUserPermission(user)">
+          Unauthorize User Permission
+        </button>
       </user>
+    </div>
+    <div v-for="user_group in user_groups">
+      <h5>{{ user_group.title }}</h5>
+      <button @click="unauthroizeUserGroupPermission(user)">
+        Unauthorize UserGroup Permission
+      </button>
     </div>
   </div>
 </template>
@@ -27,7 +38,8 @@ export default {
     return {
       title: "",
       code: "",
-      users: []
+      users: [],
+      user_groups: [],
     }
   },
 
@@ -43,12 +55,21 @@ export default {
       })
     },
 
+    showAuthroizedUserGroups (e) {
+    },
+
     deletePermission (e) {
       if (confirm('Do you really want to delete this permission?')) {
         this.$http.delete(`/perm/permissions/${ this.permission.id }`).then((resp) => {
           this.$dispatch('permission-deleted', this.permission)
         })
       }
+    },
+
+    authorizePermissionToUser (e) {
+    },
+
+    authorizePermissionToUserGroup (e) {
     },
 
   }
